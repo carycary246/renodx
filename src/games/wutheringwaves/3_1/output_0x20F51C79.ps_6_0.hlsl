@@ -592,14 +592,17 @@ float4 main(
     _545 = _468;
     _546 = _469;
   }
-  CAPTURE_TONEMAPPED(float3(_544, _545, _546));
   CLAMP_IF_SDR3(_544, _545, _546);
+  CAPTURE_TONEMAPPED(float3(_544, _545, _546));
 
   SV_Target.x = _544;
   SV_Target.y = _545;
   SV_Target.z = _546;
+
+  SV_Target.rgb = renodx::draw::RenderIntermediatePass(SV_Target.rgb);
+
   SV_Target.w = _470;
   CLAMP_IF_SDR(SV_Target.w);
-  SV_Target.rgb = renodx::draw::RenderIntermediatePass(SV_Target.rgb);
+  
   return SV_Target;
 }
